@@ -1,28 +1,25 @@
-const express = require('express');
-const products = require('./Data/products')
+import express from 'express'
+import dotenv from 'dotenv'
+import connectDB from './config/db.js'
+import  productRoute from './routes/product.route.js'
+import cors from 'cors'
+dotenv.config()
 
+
+connectDB()
 const app = express()
 
-const cors = require('cors');
-app.use(cors(
-  {
-    origin: "*"
-  }
-));
+const PORT=process.env.PORT||5000;
+app.use(cors())
+
+app.use('/api/products',productRoute)
 
 
 app.get('/', (req, res) => {
   res.send("api is running")
 })
 
-app.get('/api/products', (req, res) => {
-  res.json(products)
-})
-
-app.get('/api/products/:id', (req, res) => {
-  const item = products.find(p => p._id === req.params.id)
-  res.json(item)
-})
 
 
-app.listen(5000, console.log('server run at port 5000'))
+
+app.listen(PORT, console.log(`server run in ${process.env.NODE_ENV} on port ${PORT}`))

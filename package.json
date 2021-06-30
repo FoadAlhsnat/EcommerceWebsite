@@ -3,17 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon Backend/server",
-    "client":"npm start --prefix frontend",
-    "dev":"concurrently \"npm start\" \"npm run client\" "
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm start\" \"npm run client\" ",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d"
   },
   "keywords": [],
   "author": "Foad alhnsat",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.15"
   },
   "devDependencies": {
     "concurrently": "^6.2.0",

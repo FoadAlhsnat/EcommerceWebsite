@@ -1,47 +1,44 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,} from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
 import Rating from '../components/Rating.component'
-import axios from 'axios'
+import {listProductDetails, } from '../action/productAction'
+import Loader from '../components/Loader.component'
+import Messeage from '../components/Messeage'
 
 const Product = ({ match }) => {
-  const [item,SetItem]=useState({})
+  const dispatch = useDispatch()
+  const ProductDetails=useSelector(state=>state.productDetails)
+  const {loading,error,product}=ProductDetails;
   useEffect(() => {
-    fetchProduct()
+    dispatch(listProductDetails(match.params.id))
     // eslint-disable-next-line
-  }, [])
+  }, [dispatch,match])
 
-  const fetchProduct=async ()=>{
-    const param=match.params.id
-    try {
-      const res= await axios.get(`http://127.0.0.1:5000/api/products/${param}`)
-      console.log(res);
-      SetItem(res.data)
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  // const item = products.find(p => p._id === match.params.id);
+
   return (
     <>
-
-      <Row>
+    {
+      loading?<Loader/>:
+      error?<Messeage variant="danger"></Messeage>:
+<Row>
         <Col className="my-3" md={6}>
-          <Image rounded src={item.image} alt={item.name} fluid />
+          <Image rounded src={product.image} alt={product.name} fluid />
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h3>{item.name}</h3>
+              <h3>{product.name}</h3>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Rating value={item.rating}  text={`${item.numReviews?item.numReviews:0} reviews`} />
+              <Rating value={product.rating?product.rating:0}  text={`${product.numReviews?product.numReviews:0} reviews`} />
             </ListGroup.Item>
             <ListGroup.Item>
-              Price:${item.price}
+              Price:${product.price}
             </ListGroup.Item>
             <ListGroup.Item>
-              Description:${item.description}
+              Description:${product.description}
             </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -54,7 +51,7 @@ const Product = ({ match }) => {
                   Price:
                 </Col>
                 <Col>
-                  <strong>${item.price}</strong>
+                  <strong>${product.price}</strong>
                 </Col>
               </Row>
             </ListGroup.Item>
@@ -66,13 +63,13 @@ const Product = ({ match }) => {
                 </Col>
                 <Col>
                   {
-                    item.countInStock ? "In Stok" : "Out of Staock"
+                    product.countInStock ? "In Stok" : "Out of Staock"
                   }
                 </Col>
               </Row>
             </ListGroup.Item>
             <ListGroup.Item className="d-grid gap-2" >
-              <Button variant="primary"  size="lg" disabled={item.countInStock===0}>
+              <Button variant="primary"  size="lg" disabled={product.countInStock===0}>
                 Add to Cart
               </Button>
             </ListGroup.Item>
@@ -80,6 +77,8 @@ const Product = ({ match }) => {
           </Card>
         </Col>
       </Row>
+    }
+      
       <Link className="btn btn-info p-3 rounded " to="/">go Backe</Link>
     </>
   )
