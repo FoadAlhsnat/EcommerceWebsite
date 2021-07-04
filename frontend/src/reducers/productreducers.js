@@ -24,3 +24,5 @@ export const productDetailsReducer=(state={product:{reviews:[]}},action)=>{
       return state
   }
 }
+
+

@@ -10,7 +10,7 @@ import { listProducts } from '../action/productAction'
 const Home = () => {
   const dispatch = useDispatch()
   const productList = useSelector(state => state.productList)
-  const { loading, error, products}=productList
+  const { loading, error, products } = productList
   useEffect(() => {
     dispatch(listProducts())
   }, [dispatch])
@@ -22,29 +22,21 @@ const Home = () => {
       <h1>latsetproducts</h1>
       {
         loading ?
-          <Loader/>:
-          error?
-          <Messeage variant="danger ">{error}</Messeage>:
-      <Row>
-        {
-          products.map(product => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3} >
-              <Product product={product} />
-            </Col>
-          ))
-        }
-      </Row>
-        
+          <Loader /> :
+          error ?
+            <Messeage variant="danger ">{error}</Messeage> :
+            <Row>
+              {
+                products.map(product => (
+                  <Col key={product._id} sm={12} md={6} lg={4} xl={3} >
+                    <Product product={product} />
+                  </Col>
+                ))
+              }
+            </Row>
+
       }
-      <Row>
-        {
-          products.map(product => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3} >
-              <Product product={product} />
-            </Col>
-          ))
-        }
-      </Row>
+
     </React.Fragment>
   )
 }
