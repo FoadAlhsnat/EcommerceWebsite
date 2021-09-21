@@ -11,7 +11,7 @@ import generateToken from '../utils/genToken.js'
 const authUser=async(req,res)=>{
   
   const {email,password}=req.body
-console.log(email+" "+password);
+
   const user=await UserModel.findOne({email})
   if(user&& await user.matchPassword(password)){
     res.json({
@@ -26,7 +26,7 @@ console.log(email+" "+password);
 }
 
 
-//descGEt user profile
+//desc GEt user profile
 //route GIT /api/users/profile
 //access Private
 
