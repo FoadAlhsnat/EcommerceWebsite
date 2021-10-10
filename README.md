@@ -12,4 +12,4 @@ eCommerce platform built with the MERN stack & Redux.
 <li>Checkout process (shipping, payment method, etc)</li>
 <li>PayPal / credit card integration</li>
 <li>Database seeder (products & users)</li>
-<\ul>
+</ul>
