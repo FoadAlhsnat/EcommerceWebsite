@@ -3,7 +3,7 @@
 eCommerce platform built with the MERN stack & Redux.
 
 #Features:
-Full featured shopping cart
+Full featured shopping cart\n
 Product reviews and ratings
 Top products carousel
 User profile with orders
