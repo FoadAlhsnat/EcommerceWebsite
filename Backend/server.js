@@ -38,6 +38,7 @@ import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import productRoute from './routes/product.route.js'
 import userRoute from './routes/userRout.js'
+import orderROute from './routes/orderROute.js'
 import cors from 'cors'
 
 dotenv.config()
@@ -49,7 +50,7 @@ app.use(cors())
 app.use((bodyParser.json()))
 
 
-
+app.use('/api/orders', orderROute)
 app.use('/api/products', productRoute)
 app.use('/api/users', userRoute)
 
@@ -57,4 +58,4 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.listen(PORT, () =>  console.log(`server run in ${process.env.NODE_ENV} on port ${PORT}`))
+app.listen(PORT, () => console.log(`server run in ${process.env.NODE_ENV} on port ${PORT}`))

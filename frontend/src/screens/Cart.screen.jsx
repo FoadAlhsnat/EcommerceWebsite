@@ -23,7 +23,7 @@ const Cart = ({ match, location, history }) => {
   }, [dispatch, productId, qty])
  
   const checkOutHandler=()=>{
-    history.push('/login?redirect=shepping')
+    history.push('/login?redirect=shipping')
   }
 
   const removeFromCarthandler = (id) => {

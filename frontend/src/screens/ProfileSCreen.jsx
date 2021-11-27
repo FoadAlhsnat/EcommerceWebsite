@@ -21,8 +21,8 @@ function ProfileScreen({ location, history }) {
   const userLogin = useSelector(state =>state.userLogin)
   const { userInfo } = userLogin
 
-  const userpdateProfile = useSelector(state =>state.userUpdateProfile)
-  const { success } = userpdateProfile||null
+  const userUpdateProfile = useSelector(state =>state.userUpdateProfile)
+  const { success } = userUpdateProfile||null
 
   useEffect(() => {
     if (!userInfo) {
