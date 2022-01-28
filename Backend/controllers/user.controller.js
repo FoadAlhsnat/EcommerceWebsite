@@ -9,25 +9,28 @@ import generateToken from '../utils/genToken.js'
 //access publec
 
 const authUser=async(req,res)=>{
+  try {
+    const {email,password}=req.body
   
-  const {email,password}=req.body
-
-  const user=await UserModel.findOne({email})
-  if(user&& await user.matchPassword(password)){
-    res.json({
-      _id:user._id,
-      name:user.name,
-      email:user.email,
-      isAdmen:user.isAdmen,
-      token:generateToken(user._id),
-    })
+    const user=await UserModel.findOne({email})
+    console.log(user.isAdmin);
+    if(user&& await user.matchPassword(password)){
+      res.json({
+        _id:user._id,
+        name:user.name,
+        email:user.email,
+        isAdmin:user.isAdmin,
+        token:generateToken(user._id),
+      })
+    }
+  } catch (error) {
+    res.status(401).send("invalid email or password")
   }
-  res.status(401).send("invalid email or password")
 }
 
 
-//desc GEt user profile
-//route GIT /api/users/profile
+//desc Get user profile
+//route GET /api/users/profile
 //access Private
 
 const getUserProfile=async(req,res)=>{
@@ -37,7 +40,7 @@ const getUserProfile=async(req,res)=>{
       _id:user._id,
       name:user.name,
       email:user.email,
-      isAdmen:user.isAdmen,
+      isAdmin:user.isAdmin,
     })
   }
   else{
@@ -85,8 +88,83 @@ const registerUser=async(req,res)=>{
 }
 
 
+//desc Get all users
+//route GET /api/users
+//access Private/Admin
+
+const getAllUsers=async(req,res)=>{
+  try {
+    const users=await UserModel.find({})
+    res.json(users)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+  
+}
+
+
+//desc Delete  user
+//route DELETE /api/users/:id
+//access Private/Admin
+
+const deleteUser=async(req,res)=>{
+  try {
+    const user=await UserModel.findById(req.params.id)
+    await user.remove()
+    res.json({message:"user removed"})
+  } catch (error) {
+    res.status(400).json(error)
+  }
+  
+}
+
+
+// @desc    Get user by ID
+// @route   GET /api/users/:id
+// @access  Private/Admin
+const getUserById = async (req, res) => {
+  console.log(req.params.id);
+  const user = await UserModel.findById(req.params.id).select('-password')
+
+  if (user) {
+    res.json(user)
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+}
+
+// @desc    Update user
+// @route   PUT /api/users/:id
+// @access  Private/Admin
+const updateUser = async (req, res) => {
+  console.log(req.body);
+  const user = await UserModel.findById(req.params.id)
+  if (user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    user.isAdmin = req.body.isAdmin
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    })
+  } else {
+    res.status(404).send('User not found')
+
+  }
+}
+
 export{
   authUser,
   getUserProfile,
-  registerUser
+  registerUser,
+  getAllUsers,
+  deleteUser,
+  getUserById,
+  updateUser
 }
