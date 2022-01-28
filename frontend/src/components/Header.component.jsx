@@ -10,7 +10,7 @@ const Header = ({history}) => {
 
   const logutHandler=()=>{
     dispatch(logout())
-history.push('/')
+//history.push('/')
   }
 
   return (

@@ -103,7 +103,6 @@ export const payOrder = (orderId, paymentResult) => async (
       paymentResult,
       config
     )
-    console.log("foad");
     dispatch({
       type: "ORDER_PAY_SUCCESS",
       payload: data,

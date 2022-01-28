@@ -1,5 +1,5 @@
 import axios from "axios"
-import { type } from "express/lib/response"
+
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -162,30 +162,46 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 }
 
-export const updateUser = (user) => async (dispatch, getState) => {
-  console.log(user);
+
+
+
+export const updateUSer = (order) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: "USER_UPDATE_REQUEST"
+      type: "USER_UPDATE_REQUEST",
     })
-    const { userLogin: { userInfo } } = getState()
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
     const config = {
       headers: {
-        "Content-Type": "applicatin/json",
-        Authorization: `Bearer ${userInfo.token}`
-      }
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
     }
-    const { data } = await axios.put(`http://localhost:5000/api/users/${user._id}/`, user, config)
+
+    const { data } = await axios.put(` http://localhost:5000/api/users/${order._id}`, order, config)
+
     dispatch({
       type: "USER_UPDATE_SUCCESS",
     })
-    dispatch({
+
+     dispatch({
       type: "USER_DETAILS_SUCCESS", payload: data
     })
-
   } catch (error) {
-    dispatch({ type: "USER_UPDATE_FAIL", payload: error.message })
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: "ORDER_CREATE_FAIL",
+      payload: message,
+    })
   }
 }
-
-

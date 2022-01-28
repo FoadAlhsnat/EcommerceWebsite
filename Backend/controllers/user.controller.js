@@ -123,7 +123,6 @@ const deleteUser=async(req,res)=>{
 // @route   GET /api/users/:id
 // @access  Private/Admin
 const getUserById = async (req, res) => {
-  console.log(req.params.id);
   const user = await UserModel.findById(req.params.id).select('-password')
 
   if (user) {
@@ -138,6 +137,7 @@ const getUserById = async (req, res) => {
 // @route   PUT /api/users/:id
 // @access  Private/Admin
 const updateUser = async (req, res) => {
+  console.log('foad');
   console.log(req.body);
   const user = await UserModel.findById(req.params.id)
   if (user) {

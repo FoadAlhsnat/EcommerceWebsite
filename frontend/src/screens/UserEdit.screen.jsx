@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Form, Button, Alert } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader.component'
-import { getUserDetails,updateUser } from '../action/userAction'
+import { getUserDetails ,updateUSer} from '../action/userAction'
 import FormContiner from '../components/FormContiner.component'
 import Messeage from '../components/Messeage'
 
@@ -26,10 +26,10 @@ function UserEdit({ match, history }) {
   useEffect(() => {
     if(success){
       dispatch({type:"USER_UPDATE_RESET"})
+      
       history.push('/admin/userlist')
     }
     else{
-
       if(!user||user._id!==userId){
         dispatch(getUserDetails(userId))
       }else{
@@ -40,9 +40,10 @@ function UserEdit({ match, history }) {
     }
 
   }, [user,dispatch,history,userId,success])
+
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(updateUser({
+    dispatch(updateUSer({
       _id:userId,
       name,
       email,
@@ -89,7 +90,7 @@ function UserEdit({ match, history }) {
             onChange={(e) => setIsAdmin(e.target.checked)}
           ></Form.Check>
         </Form.Group>
-        <Button type='submit' variant="primary">
+        <Button type='submit' variant="primary" >
           Update
         </Button>
       </Form>

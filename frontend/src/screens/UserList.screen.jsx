@@ -33,7 +33,7 @@ dispatch(deleteUser(id))
 
   return (<>
     {loading ? <Loader /> : error ? <Messeage variant={'danger'} text={error}></Messeage> : (
-      <Table striped bordered hover responsive classname="table-sm">
+      <Table striped bordered hover responsive className="table-sm">
         <thead>
           <tr>
             <th>ID</th>
