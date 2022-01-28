@@ -29,11 +29,14 @@ function Rehistercreen({ location, history }) {
   }, [history, userInfo, redirect])
   const submitHandler = (e) => {
     e.preventDefault()
-    if (password !== confirmPassword||password==='') {
+    if (password !== confirmPassword || password === '') {
       setMessage("password fo not match ")
     }
     else {
-      dispatch(register(name, email, password))
+      const userInfo = {
+        name, email, password
+      }
+      dispatch(register(userInfo))
     }
 
 
@@ -49,7 +52,7 @@ function Rehistercreen({ location, history }) {
           //name
         }
         <Form.Group controlId='name'>
-          <Form.Label>Name Address</Form.Label>
+          <Form.Label>Name </Form.Label>
           <Form.Control
             type='name'
             placeholder='Enter name'

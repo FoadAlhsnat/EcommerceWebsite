@@ -41,6 +41,7 @@ import userRoute from './routes/userRout.js'
 import orderROute from './routes/orderROute.js'
 import cors from 'cors'
 
+
 dotenv.config()
 connectDB()
 
@@ -53,7 +54,7 @@ app.use((bodyParser.json()))
 app.use('/api/orders', orderROute)
 app.use('/api/products', productRoute)
 app.use('/api/users', userRoute)
-
+app.get('/api/config/paypal',(req,res)=>res.send(process.env.PAYPAL_CLINT_ID))
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })

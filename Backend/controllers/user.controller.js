@@ -53,7 +53,7 @@ const getUserProfile=async(req,res)=>{
 //access publec
 
 const registerUser=async(req,res)=>{
-  
+  console.log(req.body);
   const {name,email,password}=req.body
   const userExist=await UserModel.findOne({email})
   if(userExist){

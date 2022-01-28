@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-// import Message from '../components/Messeage'
 import Messeage from '../components/Messeage'
 import CheckoutSteps from '../components/CheckoutSteps'
-import { createOrder } from '../action/orderAction'
+import { createOrder, } from '../action/orderAction'
+
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
 
@@ -16,6 +16,8 @@ const PlaceOrderScreen = ({ history }) => {
   } else if (!cart.paymentMethod) {
     history.push('/payment')
   }
+
+
   //   Calculate prices
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
@@ -25,7 +27,7 @@ const PlaceOrderScreen = ({ history }) => {
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   )
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
-  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
+  cart.taxPrice = addDecimals(Number((0.18 * cart.itemsPrice).toFixed(2)))
   cart.totalPrice = (
     Number(cart.itemsPrice) +
     Number(cart.shippingPrice) +
@@ -34,9 +36,7 @@ const PlaceOrderScreen = ({ history }) => {
 
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
-  for( const key in orderCreate){
-    console.log(key+" "+orderCreate[key]);
-  }
+  
 
   useEffect(() => {
     if (success) {
@@ -50,7 +50,7 @@ const PlaceOrderScreen = ({ history }) => {
       createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
-        paymentMethod: "paypal",
+        paymentMethod: cart.paymentMethod,
         itemsPrice: cart.itemsPrice,
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,
@@ -145,7 +145,7 @@ const PlaceOrderScreen = ({ history }) => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                {error && <Messeage variant='danger'>{error}</Messeage>}
+                {error && <Messeage variant='danger'>Somthing went wrong</Messeage>}
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button
