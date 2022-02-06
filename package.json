@@ -1,7 +1,10 @@
 {
-  "name": "proshop",
+  "name": "foadstore",
   "version": "1.0.0",
   "description": "MERN shopping cart app",
+  "engines":{
+    "node": "14.15.3"
+  },
   "main": "server.js",
   "type": "module",
   "scripts": {
