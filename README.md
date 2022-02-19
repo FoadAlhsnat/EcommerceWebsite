@@ -4,7 +4,7 @@
 
 
 
-![screenshot](https://github.com/FoadAlhsnat/EcommerceWebsite/blob/master/uploads/foadstore.png)
+![screenshot](https://github.com/FoadAlhsnat/EcommerceWebsite/blob/master/uploads/foad.png)
 
 ## Features
 
