@@ -76,6 +76,6 @@ admin@example.com (Admin)
 
 osama12@outlook.com (Customer)
 123457
-
+```
 ### Demo
 [Link to Google] (https://foadst.herokuapp.com/)
